@@ -44,7 +44,7 @@ struct node {
 
     bool rise (char* str, char where = 'f');                //r - right, l - left, f - doesn't matter
     bool merge (node* leaf, char where = 'f');              //r - right, l - left, f - doesn't matter
-    int photo (const char* pict_name = "tree.png", const char* pict_type = "png", int iter = 0);
+    int photo (const char* pict_name = "tree.png", const char* pict_type = "png", int iter = 1);
 };
 #pragma pack(pop)
 
@@ -96,42 +96,35 @@ int node::photo(const char* pict_name, const char* pict_type, int iter) {
     ASSERT (pict_type != nullptr)
     printf ("* ");
 
-    ++iter;
     FILE* pFile = nullptr;
 
     if (iter == 1) {
         pFile = fopen ("tree_graph.dot", "w");
         ASSERT (pFile != nullptr)
 
-        fprintf (pFile, "digraph G{\n\tedge[color=\"chartreuse4\",fontcolor=\"blue\",fontsize=12];\n\tnode[shape=\"rectangle\",fontsize=15];\n\trankdir=LR;\n");
+        fprintf (pFile, "digraph G{\n\tedge[color=\"chartreuse4\",fontcolor=\"blue\",fontsize=12];\n\tnode[shape=\"rectangle\",fontsize=15];\n");
     }
     else {
         pFile = fopen ("tree_graph.dot", "a");
         ASSERT (pFile != nullptr)
     }
 
-    fprintf (pFile, "\t%d [shape=record,label=\"  %s| { <f0> %x | <f1> %x}\" ];\n", iter, data, left, right);
+    fprintf (pFile, "\t%d [shape=record,label=\"  <f0> %x| %s | <f1> %x\" ];\n", iter, left, data, right);
     fclose (pFile);
-
-    char leafes = 0;
-    if (right != nullptr) {
-        (*right).photo (pict_name, pict_type, iter);
-        ++iter;
-        pFile = fopen ("tree_graph.dot", "a");
-        fprintf (pFile, "\t\t%d:<f1> -> %d\n", iter, iter + 1);
-        fclose (pFile);
-        ++leafes;
-    }
+    
     if (left != nullptr) {
-        (*left).photo (pict_name, pict_type, iter + leafes);
-        ++iter;
+        (*left).photo (pict_name, pict_type, iter * 2);
         pFile = fopen ("tree_graph.dot", "a");
-        fprintf (pFile, "\t\t%d:<f0> -> %d\n", iter, iter + 1);
+        fprintf (pFile, "\t\t%d:<f0> -> %d\n", iter, iter * 2);
         fclose (pFile);
-        ++leafes;
+    }
+    if (right != nullptr) {
+        (*right).photo (pict_name, pict_type, iter * 2 + 1);
+        pFile = fopen ("tree_graph.dot", "a");
+        fprintf (pFile, "\t\t%d:<f1> -> %d\n", iter, iter * 2 + 1);
+        fclose (pFile);
     }
 
-    iter = iter - leafes;
     if (iter == 1) {
         ASSERT (pFile != nullptr)
         pFile = fopen ("tree_graph.dot", "a");
