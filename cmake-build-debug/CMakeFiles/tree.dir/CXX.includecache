@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/main.cpp
+stdio.h
+-
+tree.cpp
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/tree.cpp
+
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/tree.cpp
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+

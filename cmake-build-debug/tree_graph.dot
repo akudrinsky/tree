@@ -1,0 +1,12 @@
+digraph G{
+	edge[color="chartreuse4",fontcolor="blue",fontsize=12];
+	node[shape="rectangle",fontsize=15];
+	rankdir=LR;
+	1 [shape=record,label="  The Earth beauty faces| { <f0> e3def9b0 | <f1> 0}" ];
+	2 [shape=record,label="  I will be your direct sunlight| { <f0> e3def970 | <f1> e3def990}" ];
+	3 [shape=record,label="  In plain sight to the daylight| { <f0> 0 | <f1> 0}" ];
+		3:<f1> -> 4
+	5 [shape=record,label="  her blossom tree| { <f0> 0 | <f1> 0}" ];
+		4:<f0> -> 5
+		2:<f0> -> 3
+}
