@@ -14,10 +14,13 @@
     <list default="true" id="7365c3a9-57a6-42ee-aefd-9186d5486776" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tree.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tree.dir/main.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/errors_info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/errors_info.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/recovered_tree.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/tree" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tree" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/tree.png" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tree.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/tree_graph.dot" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tree_graph.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/tree_saved.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tree_saved.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tree.cpp" afterDir="false" />
     </list>
@@ -39,7 +42,9 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cmake-build-debug" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -80,7 +85,14 @@
       <workItem from="1573281963326" duration="5459000" />
       <workItem from="1573301501472" duration="68000" />
       <workItem from="1573303313463" duration="11315000" />
-      <workItem from="1573334773771" duration="10409000" />
+      <workItem from="1573334773771" duration="12596000" />
+      <workItem from="1573473439056" duration="47000" />
+      <workItem from="1573480158038" duration="402000" />
+      <workItem from="1573534734474" duration="1595000" />
+      <workItem from="1573541790911" duration="8600000" />
+      <workItem from="1573554035696" duration="465000" />
+      <workItem from="1573576960465" duration="10762000" />
+      <workItem from="1573631411529" duration="5733000" />
     </task>
     <servers />
   </component>
