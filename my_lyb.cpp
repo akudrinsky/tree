@@ -96,7 +96,7 @@ void say_it (const char* message, bool need_print = true, const char* voice = "Y
 //!
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
 #include <stdarg.h>
-char for_print[100];
+char for_print[100] = {};
 void print (char* format, ...) {
     va_list argptr = {};
     va_start (argptr, format);
@@ -149,7 +149,6 @@ void print (char* format, ...) {
     }
     va_end (argptr); /* очистка, когда все сделано */
 
-    printf ("%s", for_print);
 }
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐

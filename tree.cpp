@@ -34,12 +34,14 @@ struct node {
     explicit node (int size = default_node_size);
     ~node ();
 
-    bool merge (node* leaf, char where = 'f');              //r - right, l - left, f - doesn't matter
+    bool merge (node* leaf, char where);              //r - right, l - left
     void photo (const char* pict_name = "tree_graph.png", const char* pict_type = "png", int iter = 1, FILE* pFile = nullptr);
     bool save (const char* filename = "tree_saved.txt", FILE* pFile = nullptr, bool is_first = true, bool need_closing = true);
     bool get_tree (const char* filename = "tree_saved.txt");
     bool is_left ();
     bool is_right ();
+
+    bool is_valid();
 
     bool delete_subtree ();
 
@@ -69,7 +71,7 @@ node::~node() {                                                        //make it
         free (data);
 }
 
-bool node::merge(node *leaf, char where) {
+bool node::merge(node* leaf, char where) {
     if (leaf->data == "@") {
         return true;
     }
@@ -89,9 +91,6 @@ bool node::merge(node *leaf, char where) {
         leaf->parent = this;
         return true;
     }
-    else if (where == 'f') {
-        return false;
-    }
     else {
         err_info ("Wrong format of merge, where = ");
         err_info (&where);
@@ -106,7 +105,7 @@ void node::photo(const char* pict_name, const char* pict_type, int iter, FILE* p
     //printf ("* ");
 
     if (iter == 1) {
-        pFile = fopen (pict_name, "w");
+        pFile = fopen ("tree_graph.dot", "w");
         ASSERT (pFile != nullptr)
         fprintf (pFile, "digraph G{\n\tedge[color=\"chartreuse4\",fontcolor=\"blue\",fontsize=12];\n\tnode[shape=\"rectangle\",fontsize=15];\n");
     }
@@ -175,11 +174,12 @@ bool node::save(const char* filename, FILE* pFile, bool is_first, bool need_clos
     return status;
 }
 
-//{1{2{3{5}{8}}{4}}{6{9}{7}}}
 bool node::get_tree(const char* filename) {
     ASSERT (filename != nullptr)
     FILE* pFile = fopen (filename, "r");
     ASSERT (pFile != nullptr)
+
+    printf ("first: %p\n", this);
 
     char* file = read_text (pFile);
     char* cur = file;
@@ -188,8 +188,8 @@ bool node::get_tree(const char* filename) {
     if (*file == '{') {
         ++cur;
         sscanf (cur, "%[^{}]s%n", data, &got_c);
-        cur += got_c + 1;                                       //+1 because we need symbol after the last
-        //printf ("%s\n", cur);
+        cur += got_c + 1;                                       //+ 1 because we need symbol after the last
+        //printf ("%s\n", data);
 
         if (*cur == '{') {
             get_subtree (this, 'l', &cur);
@@ -205,24 +205,27 @@ bool node::get_tree(const char* filename) {
 
     free (file);
     fclose (pFile);
+    this->photo("ex.png");                                          //something bad happens - look to tree_graph.dot
     return true;
 }
 
 bool get_subtree (node* nd, char where, char* *cur) {
     ASSERT (cur != nullptr)
     ASSERT (nd != nullptr)
+    printf ("nd (father): %p\n", nd);
 
     while (**cur == '{' || **cur == '}') {
         (*cur)++;
     }
 
     char* leaf_data = (char*) calloc (default_node_size, sizeof (char));
+    ASSERT (leaf_data != nullptr)
     int got_c = 0;
 
     //printf ("cur: %s\n", *cur);
     sscanf (*cur, "%[^{}]s%n", leaf_data, &got_c);
-    //printf ("leaf[%c]: %s\n", where, leaf_data);
-    *cur += got_c + 1;                                       //+1 because we need symbol after the last
+    printf ("leaf[%c]: %s\n", where, leaf_data);
+    *cur += got_c + 1;                                       //+ 1 because we need symbol after the last
 
     if (strcmp (leaf_data, "@") == 0) {
         if (where == 'l') {
@@ -232,14 +235,18 @@ bool get_subtree (node* nd, char where, char* *cur) {
             nd->right = nullptr;
         }
         else {
-            err_info ("Wrong format of get_subtree\n");
+            err_info ("Wrong format in get_subtree\n");
             return false;
         }
     }
     else {
         node (new_nd);
+        printf ("nd (child): %p\n", &new_nd);
         new_nd.data = leaf_data;
         nd->merge (&new_nd, where);
+        new_nd.parent = nd;
+        printf ("parent of child: %p\n", new_nd.parent);
+        printf ("son of parent: %p\n\n", nd->left);
 
         if (**cur == '{') {
             get_subtree (&new_nd, 'l', cur);
@@ -260,6 +267,41 @@ bool node::is_left() {
 
 bool node::is_right() {
     return right != nullptr;
+}
+
+bool node::is_valid() {
+    //printf ("valiator launched\n");
+    if (data == nullptr) {
+        err_info ("Null data in node (tree_val)\n");
+        printf ("nd (child): %p\n", this->left);
+
+        return false;
+    }
+    if (is_left()) {
+        if (this != this->left->parent) {
+            err_info ("Lost connection between node and his left child\n");
+            printf ("(father): %p\n", this);
+            printf ("(child): %p\n", this->left);
+            printf ("parent of child: %p\n", this->left->parent);
+            printf ("son of parent: %p\n\n", this->left);
+            return false;
+        }
+        if (!this->left->is_valid()) {
+            return false;
+        }
+    }
+
+    if (is_right()) {
+        if (this != this->right->parent) {
+            err_info ("Lost connection between node and his right child\n");
+            return false;
+        }
+        if (!this->right->is_valid()) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 bool node::delete_subtree() {
@@ -511,10 +553,9 @@ bool tree_test() {
     nd1.save ();
 
     node (nd);
+
     nd.get_tree ();
-    //printf ("%s", nd.data);
-    printf ("%d", 5);
-    printf ("saa1");
+    nd.is_valid ();
     nd.photo ("got_tree.png");
 
     /*
