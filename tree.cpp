@@ -205,7 +205,7 @@ bool node::get_tree(const char* filename) {
 
     free (file);
     fclose (pFile);
-    this->photo("ex.png");                                          //something bad happens - look to tree_graph.dot
+    //this->photo("ex.png");                                          //something bad happens - look to tree_graph.dot
     return true;
 }
 
@@ -556,6 +556,12 @@ bool tree_test() {
 
     nd.get_tree ();
     nd.is_valid ();
+
+    printf ("Look\n\nroot: %p\n", &nd);
+    printf ("left child: %p\n", nd.left);
+    printf ("parent of child: %p\n", nd.left->parent);
+    printf ("son of parent: %p\n", nd.left);
+
     nd.photo ("got_tree.png");
 
     /*

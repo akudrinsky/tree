@@ -14,11 +14,10 @@
     <list default="true" id="7365c3a9-57a6-42ee-aefd-9186d5486776" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tree.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tree.dir/main.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/errors_info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/errors_info.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/tree" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tree" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/tree_graph.dot" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tree_graph.dot" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/tree_graph.png" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tree_graph.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ex.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/my_lyb.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/my_lyb.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tree.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -93,7 +92,7 @@
       <workItem from="1573667238802" duration="218000" />
       <workItem from="1573705703682" duration="5337000" />
       <workItem from="1573713067653" duration="92000" />
-      <workItem from="1573716355641" duration="13481000" />
+      <workItem from="1573716355641" duration="13776000" />
     </task>
     <servers />
   </component>
