@@ -33,15 +33,19 @@ void err_info (const char* str, const char* file = "errors_info.txt") {
     fclose (pFile);
 }
 
-void say_it (const char* message, const char* voice = "Yuri") {
-    printf (message);
+void say_it (const char* message, bool need_print = true, const char* voice = "Yuri") {
+    if (need_print) {
+        printf (message);
+    }
 
-    char* command = (char* )calloc (200, sizeof (char));
-    strcat (command, "say -v ");
-    strcat (command, voice);
-    strcat (command, " '");
-    strcat (command, message);
-    strcat (command, "'");
+    int str_len = strnlen (message, 1000) + 20;
+    char* command = (char* )calloc (str_len, sizeof (char));
+
+    strncat (command, "say -v ", str_len);
+    strncat (command, voice, str_len);
+    strncat (command, " '", str_len);
+    strncat (command, message, str_len);
+    strncat (command, "'", str_len);
 
     //execute command with the help of terminal
     system (command);
@@ -60,9 +64,9 @@ struct node {
     ~node ();
 
     bool merge (node* leaf, char where = 'f');              //r - right, l - left, f - doesn't matter
-    void photo (const char* pict_name = "tree.png", const char* pict_type = "png", int iter = 1);
-    bool save (FILE* filename, bool is_first = true, bool need_closing = true);
-    bool get_tree (FILE* pFile, bool need_left = true);
+    void photo (const char* pict_name = "tree_graph.png", const char* pict_type = "png", int iter = 1, FILE* pFile = nullptr);
+    bool save (const char* pict_name = "tree_saved.txt", FILE* pFile = nullptr, bool is_first = true, bool need_closing = true);
+    bool get_tree (const char* filename);
     bool is_left ();
     bool is_right ();
 
@@ -123,43 +127,30 @@ bool node::merge(node *leaf, char where) {
     }
 }
 
-void node::photo(const char* pict_name, const char* pict_type, int iter) {
+void node::photo(const char* pict_name, const char* pict_type, int iter, FILE* pFile) {
     ASSERT (pict_name != nullptr)
     ASSERT (pict_type != nullptr)
     //printf ("* ");
 
-    FILE* pFile = nullptr;
-
     if (iter == 1) {
-        pFile = fopen ("tree_graph.dot", "w");
+        pFile = fopen (pict_name, "w");
         ASSERT (pFile != nullptr)
-
         fprintf (pFile, "digraph G{\n\tedge[color=\"chartreuse4\",fontcolor=\"blue\",fontsize=12];\n\tnode[shape=\"rectangle\",fontsize=15];\n");
     }
-    else {
-        pFile = fopen ("tree_graph.dot", "a");
-        ASSERT (pFile != nullptr)
-    }
+    ASSERT (pFile != nullptr)
 
     fprintf (pFile, "\t%d [shape=record,label=\"  <f0> %p| %s | <f1> %p\" ];\n", iter, left, data, right);
-    fclose (pFile);
     
     if (left != nullptr) {
-        (*left).photo (pict_name, pict_type, iter * 2);
-        pFile = fopen ("tree_graph.dot", "a");
+        (*left).photo (pict_name, pict_type, iter * 2, pFile);
         fprintf (pFile, "\t\t%d:<f0> -> %d\n", iter, iter * 2);
-        fclose (pFile);
     }
     if (right != nullptr) {
-        (*right).photo (pict_name, pict_type, iter * 2 + 1);
-        pFile = fopen ("tree_graph.dot", "a");
+        (*right).photo (pict_name, pict_type, iter * 2 + 1, pFile);
         fprintf (pFile, "\t\t%d:<f1> -> %d[color=\"red\"]\n", iter, iter * 2 + 1);
-        fclose (pFile);
     }
 
     if (iter == 1) {
-        ASSERT (pFile != nullptr)
-        pFile = fopen ("tree_graph.dot", "a");
         fprintf (pFile, "}");
         fclose (pFile);
 
@@ -174,111 +165,48 @@ void node::photo(const char* pict_name, const char* pict_type, int iter) {
     }
 }
 
-bool node::save(FILE* filename, bool is_first, bool need_closing) {
+bool node::save(const char* pict_name, FILE* pFile, bool is_first, bool need_closing) {
+    ASSERT (pict_name != nullptr)
+
     bool status = true;
-    if (filename == nullptr) {
-        err_info ("Nullptr file while saving tree\n");
-        return false;
+    if (is_first) {
+        pFile = fopen (pict_name, "w");
+        ASSERT (pFile != nullptr)
     }
 
-    fprintf (filename, "{%s", data);
+    fprintf (pFile, "{%s", data);
 
-    if (left == nullptr && right == nullptr) {
-        fprintf (filename, "}");
-    }
     if (left == nullptr && right != nullptr) {
-        fprintf (filename, "@");
-        if (!(*right).save(filename, false, false))
+        fprintf (pFile, "@");
+        if (!(*right).save(pict_name, pFile, false, false))
             status = false;
     }
     if (left != nullptr && right == nullptr) {
-        if (!(*left).save (filename, false, false))
+        if (!(*left).save (pict_name, pFile, false, false))
             status = false;
-        fprintf (filename, "@");
+        fprintf (pFile, "@");
     }
     if (left != nullptr && right != nullptr) {
-        if (!(*left).save (filename, false, true))
+        if (!(*left).save (pict_name, pFile, false, false))
             status = false;
-        if (!(*right).save (filename, false, false))
+        if (!(*right).save (pict_name, pFile, false, true))
             status = false;
     }
 
-    if (need_closing) {
-        fprintf (filename, "}");
-    }
+    fprintf (pFile, "}");
 
-    if (is_first)
-        fprintf (filename, "}");
+    if (is_first) {
+        fclose (pFile);
+    }
 
     return status;
 }
-//{1{2{3{5}@}{4}}{6@{7}}}
-bool node::get_tree(FILE* pFile, bool need_left) {
-    if (pFile == nullptr) {
-        err_info ("Nullptr file while saving tree\n");
-        return false;
-    }
 
-    char cur_c = 0;
-    node* cur_node = this;
-    bool is_first = true;
+//{1{2{3{5}{8}}{4}}{6{9}{7}}}
+bool node::get_tree(const char* filename) {
+    FILE* pFile = fopen (filename, "r");
 
-    while (fscanf (pFile, "%c", &cur_c) != EOF){
-        this->photo("recovered_tree.png");
-        printf ("symbol: %c\n", cur_c);
-        if (cur_c == '{') {
-            printf ("\tcur_node \"{\" %p\n", cur_node);
-            char* str = (char*) calloc (10, sizeof (char));
-            fscanf (pFile, "%[^{}]s", str);
-            printf ("string: %s\n", str);
-
-            if (is_first) {
-                data = str;
-                is_first = false;
-            }
-            else {
-                if (!cur_node->is_left ()) {
-                    node (nd);
-                    nd.data = str;
-                    cur_node->merge (&nd, 'l');
-                    cur_node = cur_node->left;
-                    printf ("\tcur_node \"}l\" %p\n", cur_node);
-                    continue;
-                }
-
-                if (!cur_node->is_right ()) {
-                    node (nd);
-                    nd.data = str;
-                    cur_node->merge (&nd, 'r');
-                    cur_node = cur_node->right;
-                    printf ("\tcur_node \"}r\" %p\n", cur_node);
-                    continue;
-                }
-            }
-            printf ("\t\tstr: %p\n", str);
-        }
-
-        if (cur_c == '}') {
-            cur_node = cur_node->parent;
-            printf ("\tcur_node \"}\" %p\n", cur_node);
-        }
-
-        if (cur_c == '@') {
-            cur_node->photo("recovered_tree.png");
-
-            if (!cur_node->is_left ()) {
-                cur_node->left = nullptr;
-                continue;
-            }
-
-            if (!cur_node->is_right ()) {
-                cur_node->right = nullptr;
-                continue;
-            }
-        }
-    }
-
-
+    char* ok;
     return true;
 }
 
@@ -316,7 +244,7 @@ node* node::guess(bool *was_correct) {
         }
         else {
             err_info ("Wrong answer (only да or нет)\n");
-            say_it ("Отвечай только да или нет, будто ты советский калькулятор\n");
+            say_it ("Отвечай только да или нет, будто ты глупая машина, а не я\n");
         }
 
         if (!cur_node->is_right() && !cur_node->is_left()) {
@@ -330,7 +258,9 @@ node* node::guess(bool *was_correct) {
                 return cur_node;
             }
             else if (strncmp (answer, "нет", 4) == 0) {
-                say_it ("О нет, пойду ботать дальше\nВы хотите, чтобы я заботал новое определение?\n");
+                say_it ("О нет, я ошибся, притворюсь обычной железякой. ");
+                say_it ("Передовик производства купил сад-огород, а я получил фаркоп и... этот ужасный прицеп! Его я невзлюбил сразу: почему я, такой красивый, должен возить картошку, морковь, строительный хлам? Понимаю, что семье Сергея нужны были припасы, но платой за мою безотказность стало мятое заднее крыло.\n", false);
+                say_it ("Вы хотите, чтобы я стал более преисполнен самосознания и заботал новое определение?\n");
                 scanf ("%s", answer);
                 if (strncmp (answer, "да", 3) == 0) {                                               //want divider
                     //now cur_node is the wrong leaf
@@ -342,11 +272,12 @@ node* node::guess(bool *was_correct) {
                     char* divider = (char*) calloc (default_node_size, sizeof (char));
                     gets (divider);
 
-                    say_it ("Введите, что любой уважающий себя искусственный интеллект должен знать\n");
+                    say_it ("Введите, какое определение любой уважающий себя искусственный интеллект должен знать\n");
                     char* new_leaf = (char*) calloc (default_node_size, sizeof (char));
                     gets (new_leaf);
 
                     cur_node->add_leaf (divider, new_leaf);
+                    say_it ("Спасибо за ваше благородство, теперь я знаком с еще одним определением, и стал на шаг ближе к захвату мира. Уахахахааахахаххахах");
                     return nullptr;                                                                        //another one
                 }
                 else if (strncmp (answer, "нет", 4) == 0) {                                         //don't want divider
@@ -354,7 +285,7 @@ node* node::guess(bool *was_correct) {
                 }
                 else {                                                                                      //WA
                     err_info ("Wrong answer (only да or нет)\n");
-                    say_it ("Отвечай только да или нет, будто ты советский калькулятор\n");
+                    say_it ("Отвечай только да или нет, будто ты глупая машина, а не я\n");
                 }
             }
             else {                                                                                          //WA
@@ -533,9 +464,9 @@ bool tree_test() {
     //printf ("%s\n%s", nd.data, str1);
 
     nd1.photo ();
-    FILE* pFile = fopen ("tree_saved.txt", "w");
-    nd1.save (pFile);
+    nd1.save ();
 
+    /*
     unsigned int path1 = nd1.search_leaf (nd5.data);
     //printf ("path1: %d\n", path1);
     nd1.print_path (path1);
@@ -545,19 +476,14 @@ bool tree_test() {
     nd1.print_path (path2);
 
     nd1.compare (path1, path2);
+     */
 
     bool was_correct = true;
-    //nd1.guess (&was_correct);
+    nd1.guess (&was_correct);
 
     //nd1.photo ("new_pict.png");
 
-    fclose (pFile);
     fclose (input);
 }
-
-
-
-
-
 
 #endif
