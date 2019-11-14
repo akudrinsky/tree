@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "my_lyb.cpp"
 
 #define DEBUG
 #ifdef DEBUG
@@ -21,36 +22,6 @@
 #else
 #define ASSERT(cond) ;
 #endif
-
-void err_info (const char* str, const char* file = "errors_info.txt") {
-    ASSERT (file != nullptr)
-    ASSERT (str != nullptr)
-    FILE* pFile = fopen (file, "a");
-    ASSERT (pFile != nullptr)
-
-    fprintf (pFile, "%s", str);
-
-    fclose (pFile);
-}
-
-void say_it (const char* message, bool need_print = true, const char* voice = "Yuri") {
-    if (need_print) {
-        printf (message);
-    }
-
-    int str_len = strnlen (message, 1000) + 20;
-    char* command = (char* )calloc (str_len, sizeof (char));
-
-    strncat (command, "say -v ", str_len);
-    strncat (command, voice, str_len);
-    strncat (command, " '", str_len);
-    strncat (command, message, str_len);
-    strncat (command, "'", str_len);
-
-    //execute command with the help of terminal
-    system (command);
-    free (command);
-}
 
 int default_node_size = 20;
 #pragma pack(push, 1)
@@ -65,8 +36,8 @@ struct node {
 
     bool merge (node* leaf, char where = 'f');              //r - right, l - left, f - doesn't matter
     void photo (const char* pict_name = "tree_graph.png", const char* pict_type = "png", int iter = 1, FILE* pFile = nullptr);
-    bool save (const char* pict_name = "tree_saved.txt", FILE* pFile = nullptr, bool is_first = true, bool need_closing = true);
-    bool get_tree (const char* filename);
+    bool save (const char* filename = "tree_saved.txt", FILE* pFile = nullptr, bool is_first = true, bool need_closing = true);
+    bool get_tree (const char* filename = "tree_saved.txt");
     bool is_left ();
     bool is_right ();
 
@@ -80,6 +51,8 @@ struct node {
 
 };
 #pragma pack(pop)
+
+bool get_subtree (node* nd, char where, char* *cur);
 
 node::node(int size) {
     data = (char*) calloc (size, sizeof (char));
@@ -165,12 +138,12 @@ void node::photo(const char* pict_name, const char* pict_type, int iter, FILE* p
     }
 }
 
-bool node::save(const char* pict_name, FILE* pFile, bool is_first, bool need_closing) {
-    ASSERT (pict_name != nullptr)
+bool node::save(const char* filename, FILE* pFile, bool is_first, bool need_closing) {
+    ASSERT (filename != nullptr)
 
     bool status = true;
     if (is_first) {
-        pFile = fopen (pict_name, "w");
+        pFile = fopen (filename, "w");
         ASSERT (pFile != nullptr)
     }
 
@@ -178,18 +151,18 @@ bool node::save(const char* pict_name, FILE* pFile, bool is_first, bool need_clo
 
     if (left == nullptr && right != nullptr) {
         fprintf (pFile, "@");
-        if (!(*right).save(pict_name, pFile, false, false))
+        if (!(*right).save(filename, pFile, false, false))
             status = false;
     }
     if (left != nullptr && right == nullptr) {
-        if (!(*left).save (pict_name, pFile, false, false))
+        if (!(*left).save (filename, pFile, false, false))
             status = false;
         fprintf (pFile, "@");
     }
     if (left != nullptr && right != nullptr) {
-        if (!(*left).save (pict_name, pFile, false, false))
+        if (!(*left).save (filename, pFile, false, false))
             status = false;
-        if (!(*right).save (pict_name, pFile, false, true))
+        if (!(*right).save (filename, pFile, false, true))
             status = false;
     }
 
@@ -204,9 +177,80 @@ bool node::save(const char* pict_name, FILE* pFile, bool is_first, bool need_clo
 
 //{1{2{3{5}{8}}{4}}{6{9}{7}}}
 bool node::get_tree(const char* filename) {
+    ASSERT (filename != nullptr)
     FILE* pFile = fopen (filename, "r");
+    ASSERT (pFile != nullptr)
 
-    char* ok;
+    char* file = read_text (pFile);
+    char* cur = file;
+    int got_c = 0;
+
+    if (*file == '{') {
+        ++cur;
+        sscanf (cur, "%[^{}]s%n", data, &got_c);
+        cur += got_c + 1;                                       //+1 because we need symbol after the last
+        //printf ("%s\n", cur);
+
+        if (*cur == '{') {
+            get_subtree (this, 'l', &cur);
+            get_subtree (this, 'r', &cur);
+        }
+    }
+    else {
+        err_info ("Wrong format of saved tree (get_tree)\n");
+        free (file);
+        fclose (pFile);
+        return false;
+    }
+
+    free (file);
+    fclose (pFile);
+    return true;
+}
+
+bool get_subtree (node* nd, char where, char* *cur) {
+    ASSERT (cur != nullptr)
+    ASSERT (nd != nullptr)
+
+    while (**cur == '{' || **cur == '}') {
+        (*cur)++;
+    }
+
+    char* leaf_data = (char*) calloc (default_node_size, sizeof (char));
+    int got_c = 0;
+
+    //printf ("cur: %s\n", *cur);
+    sscanf (*cur, "%[^{}]s%n", leaf_data, &got_c);
+    //printf ("leaf[%c]: %s\n", where, leaf_data);
+    *cur += got_c + 1;                                       //+1 because we need symbol after the last
+
+    if (strcmp (leaf_data, "@") == 0) {
+        if (where == 'l') {
+            nd->left = nullptr;
+        }
+        else if (where == 'r') {
+            nd->right = nullptr;
+        }
+        else {
+            err_info ("Wrong format of get_subtree\n");
+            return false;
+        }
+    }
+    else {
+        node (new_nd);
+        new_nd.data = leaf_data;
+        nd->merge (&new_nd, where);
+
+        if (**cur == '{') {
+            get_subtree (&new_nd, 'l', cur);
+            get_subtree (&new_nd, 'r', cur);
+        }
+        else {
+            new_nd.left = nullptr;
+            new_nd.right = nullptr;
+        }
+    }
+
     return true;
 }
 
@@ -466,6 +510,13 @@ bool tree_test() {
     nd1.photo ();
     nd1.save ();
 
+    node (nd);
+    nd.get_tree ();
+    //printf ("%s", nd.data);
+    printf ("%d", 5);
+    printf ("saa1");
+    nd.photo ("got_tree.png");
+
     /*
     unsigned int path1 = nd1.search_leaf (nd5.data);
     //printf ("path1: %d\n", path1);
@@ -479,7 +530,7 @@ bool tree_test() {
      */
 
     bool was_correct = true;
-    nd1.guess (&was_correct);
+    //nd1.guess (&was_correct);
 
     //nd1.photo ("new_pict.png");
 

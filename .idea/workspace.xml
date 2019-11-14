@@ -13,11 +13,13 @@
   <component name="ChangeListManager">
     <list default="true" id="7365c3a9-57a6-42ee-aefd-9186d5486776" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tree.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tree.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tree.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tree.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tree.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tree.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tree.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/tree.dir/main.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/errors_info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/errors_info.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/errors_info.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/new_pict.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/tree" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tree" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/tree.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/tree_saved.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/tree_saved.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tree.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,8 +46,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/cmake-build-debug" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/cmake-build-debug" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -91,7 +93,8 @@
       <workItem from="1573631411529" duration="7104000" />
       <workItem from="1573667238802" duration="218000" />
       <workItem from="1573705703682" duration="5337000" />
-      <workItem from="1573713067653" duration="10000" />
+      <workItem from="1573713067653" duration="92000" />
+      <workItem from="1573716355641" duration="6791000" />
     </task>
     <servers />
   </component>
