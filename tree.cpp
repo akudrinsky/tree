@@ -179,7 +179,7 @@ bool node::get_tree(const char* filename) {
     FILE* pFile = fopen (filename, "r");
     ASSERT (pFile != nullptr)
 
-    printf ("first: %p\n", this);
+    //printf ("in function: %p\n", this);
 
     char* file = read_text (pFile);
     char* cur = file;
@@ -195,6 +195,7 @@ bool node::get_tree(const char* filename) {
             get_subtree (this, 'l', &cur);
             get_subtree (this, 'r', &cur);
         }
+        //printf ("chchchc%p\n", this->left);
     }
     else {
         err_info ("Wrong format of saved tree (get_tree)\n");
@@ -212,20 +213,23 @@ bool node::get_tree(const char* filename) {
 bool get_subtree (node* nd, char where, char* *cur) {
     ASSERT (cur != nullptr)
     ASSERT (nd != nullptr)
-    printf ("nd (father): %p\n", nd);
 
     while (**cur == '{' || **cur == '}') {
         (*cur)++;
     }
 
     char* leaf_data = (char*) calloc (default_node_size, sizeof (char));
-    ASSERT (leaf_data != nullptr)
+    if (leaf_data == nullptr) {
+        err_info ("Unable to calloc leaf_data in get_subtree\n");
+        return false;
+    }
     int got_c = 0;
 
     //printf ("cur: %s\n", *cur);
     sscanf (*cur, "%[^{}]s%n", leaf_data, &got_c);
     printf ("leaf[%c]: %s\n", where, leaf_data);
     *cur += got_c + 1;                                       //+ 1 because we need symbol after the last
+    printf ("nd (father): %p\n", nd);
 
     if (strcmp (leaf_data, "@") == 0) {
         if (where == 'l') {
@@ -241,11 +245,11 @@ bool get_subtree (node* nd, char where, char* *cur) {
     }
     else {
         node (new_nd);
-        printf ("nd (child): %p\n", &new_nd);
         new_nd.data = leaf_data;
         nd->merge (&new_nd, where);
-        new_nd.parent = nd;
+        //new_nd.parent = nd;
         printf ("parent of child: %p\n", new_nd.parent);
+        printf ("nd (child): %p\n", &new_nd);
         printf ("son of parent: %p\n\n", nd->left);
 
         if (**cur == '{') {
@@ -280,10 +284,12 @@ bool node::is_valid() {
     if (is_left()) {
         if (this != this->left->parent) {
             err_info ("Lost connection between node and his left child\n");
+            /*
             printf ("(father): %p\n", this);
             printf ("(child): %p\n", this->left);
             printf ("parent of child: %p\n", this->left->parent);
             printf ("son of parent: %p\n\n", this->left);
+             */
             return false;
         }
         if (!this->left->is_valid()) {
@@ -555,15 +561,14 @@ bool tree_test() {
     node (nd);
 
     nd.get_tree ();
-    nd.is_valid ();
-
     printf ("Look\n\nroot: %p\n", &nd);
-    printf ("left child: %p\n", nd.left);
     printf ("parent of child: %p\n", nd.left->parent);
+    printf ("left child: %p\n", nd.right);
     printf ("son of parent: %p\n", nd.left);
 
-    nd.photo ("got_tree.png");
+    nd.is_valid ();
 
+    nd.photo ("got_tree.png");
     /*
     unsigned int path1 = nd1.search_leaf (nd5.data);
     //printf ("path1: %d\n", path1);
