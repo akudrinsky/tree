@@ -10,7 +10,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "my_lyb.cpp"
+#include "my_lyb.h"
+#include "answers.h"
 
 #define DEBUG
 #ifdef DEBUG
@@ -33,6 +34,8 @@ struct node {
 
     explicit node (int size = default_node_size);
     ~node ();
+    void init (int size = default_node_size);
+    void clear ();
 
     bool merge (node* leaf, char where);              //r - right, l - left
     void photo (const char* pict_name = "tree_graph.png", const char* pict_type = "png", int iter = 1, FILE* pFile = nullptr);
@@ -45,7 +48,7 @@ struct node {
 
     bool delete_subtree ();
 
-    node* guess (bool* was_correct);                         //returns pointer to node if it was guessed or pointer to the last node of differ
+    node* guess ();                         //returns pointer to node if it was guessed or pointer to the last node of differ
     bool add_leaf (char* divider, char* new_leaf);
     int search_leaf (char* desired, unsigned int path = 1);
     bool print_path (int path);
@@ -57,10 +60,7 @@ struct node {
 bool get_subtree (node* nd, char where, char* *cur);
 
 node::node(int size) {
-    data = (char*) calloc (size, sizeof (char));
-    if (data == nullptr) {
-        err_info ("Problem with memory allocation in node construct\n");
-    }
+    data = nullptr;
     left = nullptr;
     right = nullptr;
     parent = nullptr;
@@ -71,24 +71,68 @@ node::~node() {                                                        //make it
         free (data);
 }
 
+void node::init(int size) {
+    data = (char*) calloc (size, sizeof (char));
+    if (data == nullptr) {
+        err_info ("Problem with memory allocation in node init\n");
+    }
+    left = nullptr;
+    right = nullptr;
+    parent = nullptr;
+}
+
+void node::clear() {
+    if (is_left()) {
+        left->clear();
+        delete left;
+    }
+    if (is_right()) {
+        right->clear();
+        delete right;
+    }
+    free (data);
+    left = nullptr;
+    right = nullptr;
+    parent = nullptr;
+    delete this;
+}
+
 bool node::merge(node* leaf, char where) {
+    ASSERT(leaf != nullptr)
+
     if (leaf->data == "@") {
         return true;
     }
     if (where == 'l') {
-        if (left != nullptr) {
-                                        //destruct left leaf
-        }
         left = leaf;
         leaf->parent = this;
         return true;
     }
     else if (where == 'r') {
-        if (right != nullptr) {
-                                        //destruct right leaf
-        }
         right = leaf;
         leaf->parent = this;
+        return true;
+    }
+    else {
+        err_info ("Wrong format of merge, where = ");
+        err_info (&where);
+        err_info ("\n");
+        return false;
+    }
+}
+
+bool merge2 (node* root, node* leaf, char where) {
+    if (leaf->data == "@") {
+        return true;
+    }
+    if (where == 'l') {
+        root->left = leaf;
+        leaf->parent = root;
+        return true;
+    }
+    else if (where == 'r') {
+        root->right = leaf;
+        leaf->parent = root;
         return true;
     }
     else {
@@ -191,7 +235,7 @@ bool node::get_tree(const char* filename) {
         cur += got_c + 1;                                       //+ 1 because we need symbol after the last
         //printf ("%s\n", data);
 
-        if (*cur == '{') {
+        if (*cur != '}') {
             get_subtree (this, 'l', &cur);
             get_subtree (this, 'r', &cur);
         }
@@ -247,6 +291,7 @@ bool get_subtree (node* nd, char where, char* *cur) {
         node (new_nd);
         new_nd.data = leaf_data;
         nd->merge (&new_nd, where);
+        //merge2 (nd, &new_nd, where);
         //new_nd.parent = nd;
         printf ("parent of child: %p\n", new_nd.parent);
         printf ("nd (child): %p\n", &new_nd);
@@ -284,13 +329,6 @@ bool node::is_valid() {
     if (is_left()) {
         if (this != this->left->parent) {
             err_info ("Lost connection between node and his left child\n");
-            /*
-            printf ("(father): %p\n", this);
-            printf ("(child): %p\n", this->left);
-            printf ("parent of child: %p\n", this->left->parent);
-            printf ("son of parent: %p\n\n", this->left);
-             */
-            return false;
         }
         if (!this->left->is_valid()) {
             return false;
@@ -320,11 +358,10 @@ bool node::delete_subtree() {
     return true;
 }
 
-node* node::guess(bool *was_correct) {
-    bool flag = true;
+node* node::guess() {
     node* cur_node = this;
     char answer[10] = "";
-    while (flag) {
+    while (true) {
         say_it (cur_node->data);
         printf ("\t");
         scanf ("%s", answer);
@@ -336,7 +373,7 @@ node* node::guess(bool *was_correct) {
         }
         else {
             err_info ("Wrong answer (only да or нет)\n");
-            say_it ("Отвечай только да или нет, будто ты глупая машина, а не я\n");
+            say_it (not_yesno[rand() % not_yesno_n]);
         }
 
         if (!cur_node->is_right() && !cur_node->is_left()) {
@@ -346,13 +383,11 @@ node* node::guess(bool *was_correct) {
 
             scanf ("%s", answer);
             if (strncmp (answer, "да", 3) == 0) {
-                say_it ("Жесть какой я умный\n");
+                say_it (praise_me[rand() % praise_me_n]);
                 return cur_node;
             }
             else if (strncmp (answer, "нет", 4) == 0) {
-                say_it ("О нет, я ошибся, притворюсь обычной железякой. ");
-                say_it ("Передовик производства купил сад-огород, а я получил фаркоп и... этот ужасный прицеп! Его я невзлюбил сразу: почему я, такой красивый, должен возить картошку, морковь, строительный хлам? Понимаю, что семье Сергея нужны были припасы, но платой за мою безотказность стало мятое заднее крыло.\n", false);
-                say_it ("Вы хотите, чтобы я стал более преисполнен самосознания и заботал новое определение?\n");
+                say_it (mistake[rand() % mistake_n]);
                 scanf ("%s", answer);
                 if (strncmp (answer, "да", 3) == 0) {                                               //want divider
                     //now cur_node is the wrong leaf
@@ -362,14 +397,14 @@ node* node::guess(bool *was_correct) {
                     say_it (", тем, что он ...\"\n");
 
                     char* divider = (char*) calloc (default_node_size, sizeof (char));
-                    gets (divider);
+                    scanf ("%s", divider);
 
-                    say_it ("Введите, какое определение любой уважающий себя искусственный интеллект должен знать\n");
+                    say_it (which_def[rand() % which_def_n]);
                     char* new_leaf = (char*) calloc (default_node_size, sizeof (char));
-                    gets (new_leaf);
+                    scanf ("%s", new_leaf);
 
                     cur_node->add_leaf (divider, new_leaf);
-                    say_it ("Спасибо за ваше благородство, теперь я знаком с еще одним определением, и стал на шаг ближе к захвату мира. Уахахахааахахаххахах");
+                    say_it (thank_for_def[rand() % thank_for_def_n]);
                     return nullptr;                                                                        //another one
                 }
                 else if (strncmp (answer, "нет", 4) == 0) {                                         //don't want divider
@@ -377,32 +412,33 @@ node* node::guess(bool *was_correct) {
                 }
                 else {                                                                                      //WA
                     err_info ("Wrong answer (only да or нет)\n");
-                    say_it ("Отвечай только да или нет, будто ты глупая машина, а не я\n");
+                    say_it (not_yesno[rand() % not_yesno_n]);
                 }
             }
             else {                                                                                          //WA
                 err_info ("Wrong answer (only да or нет)\n");
-                say_it ("Отвечай только да или нет, будто ты советский калькулятор\n");
+                say_it (not_yesno[rand() % not_yesno_n]);
             }
         }
     }
 }
 
 bool node::add_leaf(char* divider, char* new_leaf) {
-    node (r_leaf);
-    node (l_leaf);
+    node* r_leaf = new node;
+    node* l_leaf = new node;
 
-    r_leaf.data = data;
-    l_leaf.data = new_leaf;
+    r_leaf->data = data;
+    l_leaf->data = new_leaf;
     data = divider;
 
-    this->merge (&r_leaf, 'r');
-    this->merge (&l_leaf, 'l');
+    this->merge (r_leaf, 'r');
+    this->merge (l_leaf, 'l');
 
     return true;
 }
 
 int node::search_leaf(char *desired, unsigned int path) {                          //returns path to leaf as 01101010, 1 - left, 0 - right
+    ASSERT (desired != nullptr)
     //printf ("cur-path = %d\n", path);
     int tmp = 0;
     if (strncmp (desired, this->data, default_node_size) == 0) {
@@ -453,11 +489,14 @@ bool node::print_path(int path) {
         bool digit = (path & mask) >> i;
         //printf ("digit = %d\n", digit);
         if (digit) {
-            printf ("%s; ", cur_node->data);
+            say_it (cur_node->data);
+            printf (", ");
             cur_node = cur_node->left;
         }
         else {
-            printf ("не %s; ", cur_node->data);
+            say_it ("не ");
+            say_it (cur_node->data);
+            printf (", ");
             cur_node = cur_node->right;
         }
         mask = mask >> 1;
@@ -481,15 +520,18 @@ bool node::compare(int path1, int path2) {
     bool digit1 = (path1 & mask1) >> (num1 - i);
     bool digit2 = (path2 & mask2) >> (num2 - i);
 
-    printf ("Они оба: ");
+    say_it ("Они оба: ");
     while (digit1 == digit2) {
 
         if (digit1) {
-            printf ("%s; ", cur_node->data);
+            say_it (cur_node->data);
+            printf (", ");
             cur_node = cur_node->left;
         }
         else {
-            printf ("не %s; ", cur_node->data);
+            say_it ("не ");
+            say_it (cur_node->data);
+            printf (", ");
             cur_node = cur_node->right;
         }
 
@@ -502,11 +544,11 @@ bool node::compare(int path1, int path2) {
         digit2 = (path2 & mask2) >> (num2 - i);
     }
 
-    printf ("\nОднако первый: ");
+    say_it ("\nоднако первый: ");
     mask1 = (1 << (num1 - i + 1)) - 1;
     cur_node->print_path ((path1 & mask1) + (1 << (num1 - i + 1)));
 
-    printf ("А второй: ");
+    say_it ("а второй, в свою очередь: ");
     mask2 = (1 << (num2 - i + 1)) - 1;
     cur_node->print_path ((path2 & mask2) + (1 << (num2 - i + 1)));
 
@@ -558,17 +600,20 @@ bool tree_test() {
     nd1.photo ();
     nd1.save ();
 
-    node (nd);
 
-    nd.get_tree ();
+    node* nd = new node;
+    nd->init();
+    nd->get_tree ();
     printf ("Look\n\nroot: %p\n", &nd);
-    printf ("parent of child: %p\n", nd.left->parent);
-    printf ("left child: %p\n", nd.right);
-    printf ("son of parent: %p\n", nd.left);
+    printf ("parent of child: %p\n", nd->left->parent);
+    printf ("left child: %p\n", nd->right);
+    printf ("son of parent: %p\n", nd->left);
 
-    nd.is_valid ();
+    nd->is_valid ();
 
-    nd.photo ("got_tree.png");
+    nd->photo ("got_tree.png");
+    nd->clear();
+
     /*
     unsigned int path1 = nd1.search_leaf (nd5.data);
     //printf ("path1: %d\n", path1);
@@ -581,12 +626,57 @@ bool tree_test() {
     nd1.compare (path1, path2);
      */
 
-    bool was_correct = true;
-    //nd1.guess (&was_correct);
 
-    //nd1.photo ("new_pict.png");
+    /*
+    int mode = 1;
+    while (mode != 0) {
+        say_it ("Во что вы хотите играть? 1 - угадывание, 2 - определение объекта, 3 - сравнение двух строк, 4 - сохранить изменения, 0 - выход\n");
+        scanf ("%d", &mode);
+        switch (mode) {
+            case 1: {
+                nd1.guess();
+                break;
+            }
+            case 2: {
+                char* req_elem = (char*) calloc (default_node_size, sizeof (char));
+                say_it ("Какой объект вы хотите узнать от машины, преисполненной силы умственного познания?\n");
+                scanf ("%s", req_elem);
+                unsigned int path1 = nd1.search_leaf (req_elem);
+
+                nd1.print_path (path1);
+                free (req_elem);
+                break;
+            }
+            case 3: {
+                char* req_elem = (char*) calloc (default_node_size, sizeof (char));
+                say_it ("Каков первый объект для сравнения через мою ультра умную систему?\n");
+                scanf ("%s", req_elem);
+                unsigned int path1 = nd1.search_leaf (req_elem);
+
+                say_it ("Каков второй объект для сравнения через мой высоко-эффективный интеллект?\n");
+                scanf ("%s", req_elem);
+                unsigned int path2 = nd1.search_leaf (req_elem);
+
+                nd1.compare (path1, path2);
+
+                free (req_elem);
+                break;
+            }
+            case 4: {
+                say_it ("К сожалению, мой создатель не обладает столь великоразумным мозгом, и не смог отдебажить эту часть моего невероятного функционала. Все вопросы к нему!\n");
+                break;
+            }
+            default: {
+                say_it ("Вы ввели что-то странное. Давайте еще разок!\n");
+                break;
+            }
+        }
+    }
+     */
 
     fclose (input);
+
+    return true;
 }
 
 #endif

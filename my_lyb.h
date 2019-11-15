@@ -30,7 +30,10 @@ struct str {
     int len;
 };
 
-using namespace std;
+//using namespace std;
+
+void err_info (const char* str, const char* file = "errors_info.txt");
+void say_it (const char* message, bool need_print = true, const char* voice = "Yuri");
 
 char* read_text (FILE* pFile);
 void make_orig_txt (str* first_line, str* last_line);
@@ -58,7 +61,7 @@ void test_count_symbols (void);
 void test_count_lines (void);
 void test_replace_c (void);
 
-void err_info (const char* str, const char* file = "errors_info.txt") {
+void err_info (const char* str, const char* file) {
     ASSERT (file != nullptr)
     ASSERT (str != nullptr)
     FILE* pFile = fopen (file, "a");
@@ -69,7 +72,7 @@ void err_info (const char* str, const char* file = "errors_info.txt") {
     fclose (pFile);
 }
 
-void say_it (const char* message, bool need_print = true, const char* voice = "Yuri") {
+void say_it (const char* message, bool need_print, const char* voice) {
     if (need_print) {
         printf (message);
     }
@@ -277,7 +280,7 @@ void make_orig_txt (str* first_line, str* last_line) {
             --last_line;
 
         if (first_line <= last_line) {
-            swap (*first_line, *last_line);
+            std::swap (*first_line, *last_line);
             ++first_line;
             --last_line;
         }

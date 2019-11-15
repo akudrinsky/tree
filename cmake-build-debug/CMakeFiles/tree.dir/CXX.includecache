@@ -6,13 +6,15 @@
 
 #IncludeRegexTransform: 
 
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/answers.h
+
 /Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/main.cpp
 stdio.h
 -
 tree.cpp
 /Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/tree.cpp
 
-/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/my_lyb.cpp
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/my_lyb.h
 stdio.h
 -
 stdlib.h
@@ -33,6 +35,8 @@ stdlib.h
 -
 string.h
 -
-my_lyb.cpp
-/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/my_lyb.cpp
+my_lyb.h
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/my_lyb.h
+answers.h
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/answers.h
 
