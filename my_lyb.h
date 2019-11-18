@@ -61,6 +61,21 @@ void test_count_symbols (void);
 void test_count_lines (void);
 void test_replace_c (void);
 
+int find_bool_length (int path, const int max_depth = 10) {
+    int num = 0;
+
+    for (num = max_depth; num > 0; num--) {
+        if ((path >> num) == 1) {
+            break;
+        }
+    }
+
+    if (num == max_depth)
+        err_info ("maybe you had overwritten max_depth while finding digits number\n");
+
+    return num + 1;
+}
+
 void err_info (const char* str, const char* file) {
     ASSERT (file != nullptr)
     ASSERT (str != nullptr)
@@ -370,6 +385,31 @@ bool is_letter (char ch) {
     if (ch >= 'a' && ch <= 'z')
         return true;
     return (ch >= 'A' && ch <= 'Z');
+}
+
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+//! Writes if the character is a number or not
+//!
+//! @param [in] ch - character
+//! @param [out] true for number, else false
+//!
+//‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐
+bool is_num (const char* str) {
+    if ((str[0] < '0' || str[0] > '9') && str[0] != '-') {
+        //printf ("first\n");
+        return false;
+    }
+    if (strncmp (str, "-", 3) == 0) {
+        return false;
+    }
+    for (int i = 1; i < strlen (str); ++i) {
+        if (str[i] < '0' || str[i] > '9') {
+            //printf ("not first\n");
+            return false;
+        }
+    }
+
+    return true;
 }
 
 //‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐‐

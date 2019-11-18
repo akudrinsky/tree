@@ -6,15 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/answers.h
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/dsl.h
 
-/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/main.cpp
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/main.cpp
 stdio.h
 -
 tree.cpp
-/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/tree.cpp
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/tree.cpp
 
-/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/my_lyb.h
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/my_lyb.h
 stdio.h
 -
 stdlib.h
@@ -28,7 +28,9 @@ math.h
 stdarg.h
 -
 
-/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/tree.cpp
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/operations.h
+
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/tree.cpp
 stdio.h
 -
 stdlib.h
@@ -36,7 +38,9 @@ stdlib.h
 string.h
 -
 my_lyb.h
-/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/my_lyb.h
-answers.h
-/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/answers.h
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/my_lyb.h
+operations.h
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/operations.h
+dsl.h
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/dsl.h
 

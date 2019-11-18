@@ -1,4 +1,4 @@
-# Install script for directory: /Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree
+# Install script for directory: /Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

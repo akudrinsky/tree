@@ -1,0 +1,63 @@
+digraph G{
+	edge[color="chartreuse4",fontcolor="blue",fontsize=12];
+	node[shape="rectangle",fontsize=15];
+	1 [shape=record,label="  <f0> 0x7fb5fcd00060| {* | op} | <f1> 0x7fb5fcd001e0" ];
+	2 [shape=record,label="  <f0> 0x7fb5fcd00000| {^ | op} | <f1> 0x7fb5fcd00030" ];
+	4 [shape=record,label="  <f0> 0x7fb5fcc02800| {- | op} | <f1> 0x7fb5fcc028f0" ];
+	8 [shape=record,label="  <f0> 0x7fb5fcc02850| {* | op} | <f1> 0x7fb5fcc028a0" ];
+	16 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		8:<f0> -> 16
+	17 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		8:<f1> -> 17[color="red"]
+		4:<f0> -> 8
+	9 [shape=record,label="  <f0> 0x0| {3.000 | num} | <f1> 0x0" ];
+		4:<f1> -> 9[color="red"]
+		2:<f0> -> 4
+	5 [shape=record,label="  <f0> 0x7fb5fcc02990| {/ | op} | <f1> 0x7fb5fcc029e0" ];
+	10 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		5:<f0> -> 10
+	11 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		5:<f1> -> 11[color="red"]
+		2:<f1> -> 5[color="red"]
+		1:<f0> -> 2
+	3 [shape=record,label="  <f0> 0x7fb5fcd000f0| {+ | op} | <f1> 0x7fb5fcd001b0" ];
+	6 [shape=record,label="  <f0> 0x7fb5fcd00090| {/ | op} | <f1> 0x7fb5fcd000c0" ];
+	12 [shape=record,label="  <f0> 0x7fb5fcc02990| {/ | op} | <f1> 0x7fb5fcc029e0" ];
+	24 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		12:<f0> -> 24
+	25 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		12:<f1> -> 25[color="red"]
+		6:<f0> -> 12
+	13 [shape=record,label="  <f0> 0x7fb5fcc02800| {- | op} | <f1> 0x7fb5fcc028f0" ];
+	26 [shape=record,label="  <f0> 0x7fb5fcc02850| {* | op} | <f1> 0x7fb5fcc028a0" ];
+	52 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		26:<f0> -> 52
+	53 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		26:<f1> -> 53[color="red"]
+		13:<f0> -> 26
+	27 [shape=record,label="  <f0> 0x0| {3.000 | num} | <f1> 0x0" ];
+		13:<f1> -> 27[color="red"]
+		6:<f1> -> 13[color="red"]
+		3:<f0> -> 6
+	7 [shape=record,label="  <f0> 0x7fb5fcd00150| {* | op} | <f1> 0x7fb5fcd00180" ];
+	14 [shape=record,label="  <f0> 0x7fb5fcd00120| {ln | op} | <f1> 0x0" ];
+	28 [shape=record,label="  <f0> 0x7fb5fcc02800| {- | op} | <f1> 0x7fb5fcc028f0" ];
+	56 [shape=record,label="  <f0> 0x7fb5fcc02850| {* | op} | <f1> 0x7fb5fcc028a0" ];
+	112 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		56:<f0> -> 112
+	113 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		56:<f1> -> 113[color="red"]
+		28:<f0> -> 56
+	57 [shape=record,label="  <f0> 0x0| {3.000 | num} | <f1> 0x0" ];
+		28:<f1> -> 57[color="red"]
+		14:<f0> -> 28
+		7:<f0> -> 14
+	15 [shape=record,label="  <f0> 0x7fb5fcc02990| {/ | op} | <f1> 0x7fb5fcc029e0" ];
+	30 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		15:<f0> -> 30
+	31 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		15:<f1> -> 31[color="red"]
+		7:<f1> -> 15[color="red"]
+		3:<f1> -> 7[color="red"]
+		1:<f1> -> 3[color="red"]
+}

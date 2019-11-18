@@ -1,9 +1,0 @@
-Lost connection between node and his left child
-Lost connection between node and his left child
-Lost connection between node and his left child
-Wrong answer (only да or нет)
-Wrong answer (only да or нет)
-Wrong answer (only да or нет)
-Wrong answer (only да or нет)
-Lost connection between node and his left child
-Lost connection between node and his left child

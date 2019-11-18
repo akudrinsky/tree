@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/main.cpp" "/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/tree/cmake-build-debug/CMakeFiles/tree.dir/main.cpp.o"
+  "/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/main.cpp" "/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/cmake-build-debug/CMakeFiles/tree.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
