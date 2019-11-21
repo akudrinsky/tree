@@ -6,6 +6,8 @@
 
 #IncludeRegexTransform: 
 
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/comments.h
+
 /Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/dsl.h
 
 /Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/main.cpp
@@ -37,10 +39,16 @@ stdlib.h
 -
 string.h
 -
+time.h
+-
+math.h
+-
 my_lyb.h
 /Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/my_lyb.h
 operations.h
 /Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/operations.h
 dsl.h
 /Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/dsl.h
+comments.h
+/Users/alexeykudrinsky/Documents/MIPT/1 course/Introduction to data structures/diff/comments.h
 

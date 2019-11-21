@@ -1,61 +1,117 @@
 digraph G{
 	edge[color="chartreuse4",fontcolor="blue",fontsize=12];
 	node[shape="rectangle",fontsize=15];
-	1 [shape=record,label="  <f0> 0x7fb5fcd00060| {* | op} | <f1> 0x7fb5fcd001e0" ];
-	2 [shape=record,label="  <f0> 0x7fb5fcd00000| {^ | op} | <f1> 0x7fb5fcd00030" ];
-	4 [shape=record,label="  <f0> 0x7fb5fcc02800| {- | op} | <f1> 0x7fb5fcc028f0" ];
-	8 [shape=record,label="  <f0> 0x7fb5fcc02850| {* | op} | <f1> 0x7fb5fcc028a0" ];
-	16 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+	1 [shape=record,label="  <f0> 0x7fc711d003c0| {+ | op} | <f1> 0x7fc711d007e0" ];
+	2 [shape=record,label="  <f0> 0x7fc711d002a0| {+ | op} | <f1> 0x7fc711d00390" ];
+	4 [shape=record,label="  <f0> 0x7fc711d00240| {* | op} | <f1> 0x7fc711d00270" ];
+	8 [shape=record,label="  <f0> 0x7fc711d001e0| {/ | op} | <f1> 0x7fc711d00210" ];
+	16 [shape=record,label="  <f0> 0x7fc711d00120| {- | op} | <f1> 0x7fc711d001b0" ];
+	32 [shape=record,label="  <f0> 0x7fc711d000c0| {* | op} | <f1> 0x7fc711d000f0" ];
+	64 [shape=record,label="  <f0> 0x7fc711d00030| {* | op} | <f1> 0x7fc711d00060" ];
+	128 [shape=record,label="  <f0> 0x7fc711d00000| {cos | op} | <f1> 0x0" ];
+	256 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		128:<f0> -> 256
+		64:<f0> -> 128
+	129 [shape=record,label="  <f0> 0x0| {1.000 | num} | <f1> 0x0" ];
+		64:<f1> -> 129[color="red"]
+		32:<f0> -> 64
+	65 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		32:<f1> -> 65[color="red"]
+		16:<f0> -> 32
+	33 [shape=record,label="  <f0> 0x7fc711d00150| {* | op} | <f1> 0x7fc711d00180" ];
+	66 [shape=record,label="  <f0> 0x0| {1.000 | num} | <f1> 0x0" ];
+		33:<f0> -> 66
+	67 [shape=record,label="  <f0> 0x7fc711c028f0| {sin | op} | <f1> 0x0" ];
+	134 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		67:<f0> -> 134
+		33:<f1> -> 67[color="red"]
+		16:<f1> -> 33[color="red"]
 		8:<f0> -> 16
-	17 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+	17 [shape=record,label="  <f0> 0x7fc711c02960| {* | op} | <f1> 0x7fc711c02960" ];
+	34 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		17:<f0> -> 34
+	35 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		17:<f1> -> 35[color="red"]
 		8:<f1> -> 17[color="red"]
 		4:<f0> -> 8
-	9 [shape=record,label="  <f0> 0x0| {3.000 | num} | <f1> 0x0" ];
+	9 [shape=record,label="  <f0> 0x7fc711c02a00| {ln | op} | <f1> 0x0" ];
+	18 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		9:<f0> -> 18
 		4:<f1> -> 9[color="red"]
 		2:<f0> -> 4
-	5 [shape=record,label="  <f0> 0x7fb5fcc02990| {/ | op} | <f1> 0x7fb5fcc029e0" ];
-	10 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+	5 [shape=record,label="  <f0> 0x7fc711d002d0| {* | op} | <f1> 0x7fc711d00360" ];
+	10 [shape=record,label="  <f0> 0x7fc711c028a0| {/ | op} | <f1> 0x7fc711c02960" ];
+	20 [shape=record,label="  <f0> 0x7fc711c028f0| {sin | op} | <f1> 0x0" ];
+	40 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		20:<f0> -> 40
+		10:<f0> -> 20
+	21 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		10:<f1> -> 21[color="red"]
 		5:<f0> -> 10
-	11 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+	11 [shape=record,label="  <f0> 0x7fc711d00300| {/ | op} | <f1> 0x7fc711d00330" ];
+	22 [shape=record,label="  <f0> 0x0| {1.000 | num} | <f1> 0x0" ];
+		11:<f0> -> 22
+	23 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		11:<f1> -> 23[color="red"]
 		5:<f1> -> 11[color="red"]
 		2:<f1> -> 5[color="red"]
 		1:<f0> -> 2
-	3 [shape=record,label="  <f0> 0x7fb5fcd000f0| {+ | op} | <f1> 0x7fb5fcd001b0" ];
-	6 [shape=record,label="  <f0> 0x7fb5fcd00090| {/ | op} | <f1> 0x7fb5fcd000c0" ];
-	12 [shape=record,label="  <f0> 0x7fb5fcc02990| {/ | op} | <f1> 0x7fb5fcc029e0" ];
-	24 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
-		12:<f0> -> 24
-	25 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
-		12:<f1> -> 25[color="red"]
+	3 [shape=record,label="  <f0> 0x7fc711d00450| {+ | op} | <f1> 0x7fc711d007b0" ];
+	6 [shape=record,label="  <f0> 0x7fc711d003f0| {* | op} | <f1> 0x7fc711d00420" ];
+	12 [shape=record,label="  <f0> 0x0| {1.000 | num} | <f1> 0x0" ];
 		6:<f0> -> 12
-	13 [shape=record,label="  <f0> 0x7fb5fcc02800| {- | op} | <f1> 0x7fb5fcc028f0" ];
-	26 [shape=record,label="  <f0> 0x7fb5fcc02850| {* | op} | <f1> 0x7fb5fcc028a0" ];
+	13 [shape=record,label="  <f0> 0x7fc711c02b60| {tg | op} | <f1> 0x0" ];
+	26 [shape=record,label="  <f0> 0x7fc711c02bb0| {* | op} | <f1> 0x7fc711c02c00" ];
 	52 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
 		26:<f0> -> 52
-	53 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+	53 [shape=record,label="  <f0> 0x7fc711c02c50| {ln | op} | <f1> 0x0" ];
+	106 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		53:<f0> -> 106
 		26:<f1> -> 53[color="red"]
 		13:<f0> -> 26
-	27 [shape=record,label="  <f0> 0x0| {3.000 | num} | <f1> 0x0" ];
-		13:<f1> -> 27[color="red"]
 		6:<f1> -> 13[color="red"]
 		3:<f0> -> 6
-	7 [shape=record,label="  <f0> 0x7fb5fcd00150| {* | op} | <f1> 0x7fb5fcd00180" ];
-	14 [shape=record,label="  <f0> 0x7fb5fcd00120| {ln | op} | <f1> 0x0" ];
-	28 [shape=record,label="  <f0> 0x7fb5fcc02800| {- | op} | <f1> 0x7fb5fcc028f0" ];
-	56 [shape=record,label="  <f0> 0x7fb5fcc02850| {* | op} | <f1> 0x7fb5fcc028a0" ];
-	112 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
-		56:<f0> -> 112
-	113 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
-		56:<f1> -> 113[color="red"]
-		28:<f0> -> 56
-	57 [shape=record,label="  <f0> 0x0| {3.000 | num} | <f1> 0x0" ];
-		28:<f1> -> 57[color="red"]
-		14:<f0> -> 28
+	7 [shape=record,label="  <f0> 0x7fc711d00480| {* | op} | <f1> 0x7fc711d00780" ];
+	14 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
 		7:<f0> -> 14
-	15 [shape=record,label="  <f0> 0x7fb5fcc02990| {/ | op} | <f1> 0x7fb5fcc029e0" ];
-	30 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+	15 [shape=record,label="  <f0> 0x7fc711d005a0| {* | op} | <f1> 0x7fc711d00750" ];
+	30 [shape=record,label="  <f0> 0x7fc711d004b0| {/ | op} | <f1> 0x7fc711d00570" ];
+	60 [shape=record,label="  <f0> 0x0| {1.000 | num} | <f1> 0x0" ];
+		30:<f0> -> 60
+	61 [shape=record,label="  <f0> 0x7fc711d00510| {^ | op} | <f1> 0x7fc711d00540" ];
+	122 [shape=record,label="  <f0> 0x7fc711d004e0| {cos | op} | <f1> 0x0" ];
+	244 [shape=record,label="  <f0> 0x7fc711c02bb0| {* | op} | <f1> 0x7fc711c02c00" ];
+	488 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		244:<f0> -> 488
+	489 [shape=record,label="  <f0> 0x7fc711c02c50| {ln | op} | <f1> 0x0" ];
+	978 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		489:<f0> -> 978
+		244:<f1> -> 489[color="red"]
+		122:<f0> -> 244
+		61:<f0> -> 122
+	123 [shape=record,label="  <f0> 0x0| {2.000 | num} | <f1> 0x0" ];
+		61:<f1> -> 123[color="red"]
+		30:<f1> -> 61[color="red"]
 		15:<f0> -> 30
-	31 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+	31 [shape=record,label="  <f0> 0x7fc711d00630| {+ | op} | <f1> 0x7fc711d00720" ];
+	62 [shape=record,label="  <f0> 0x7fc711d005d0| {* | op} | <f1> 0x7fc711d00600" ];
+	124 [shape=record,label="  <f0> 0x0| {1.000 | num} | <f1> 0x0" ];
+		62:<f0> -> 124
+	125 [shape=record,label="  <f0> 0x7fc711c02c50| {ln | op} | <f1> 0x0" ];
+	250 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		125:<f0> -> 250
+		62:<f1> -> 125[color="red"]
+		31:<f0> -> 62
+	63 [shape=record,label="  <f0> 0x7fc711d00660| {* | op} | <f1> 0x7fc711d006f0" ];
+	126 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		63:<f0> -> 126
+	127 [shape=record,label="  <f0> 0x7fc711d00690| {/ | op} | <f1> 0x7fc711d006c0" ];
+	254 [shape=record,label="  <f0> 0x0| {1.000 | num} | <f1> 0x0" ];
+		127:<f0> -> 254
+	255 [shape=record,label="  <f0> 0x0| {var | 0.000} | <f1> 0x0" ];
+		127:<f1> -> 255[color="red"]
+		63:<f1> -> 127[color="red"]
+		31:<f1> -> 63[color="red"]
 		15:<f1> -> 31[color="red"]
 		7:<f1> -> 15[color="red"]
 		3:<f1> -> 7[color="red"]

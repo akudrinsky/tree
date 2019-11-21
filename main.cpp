@@ -3,6 +3,7 @@
 
 int main() {
     diff_test ();
+
     return 0;
 }
 

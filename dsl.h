@@ -1,5 +1,5 @@
 #define d(node)\
-node->diff()
+node->diff(latex, root)
 
 #define c(node)\
 node->copy()
@@ -22,11 +22,26 @@ create_node (0, divide, left_l, right_l)
 #define POW(left_l, right_l)\
 create_node (0, power, left_l, right_l)
 
-#define LN(lf)\
-create_node (0, ln, lf, nullptr)
-
 #define SIN(lf)\
 create_node (0, sinus, lf, nullptr)
 
 #define COS(lf)\
 create_node (0, cosinus, lf, nullptr)
+
+#define TG(lf)\
+create_node (0, tg, lf, nullptr)
+
+#define LN(lf)\
+create_node (0, ln, lf, nullptr)
+
+#define ARCSIN(lf)\
+create_node (0, arcsin, lf, nullptr)
+
+#define ARCCOS(lf)\
+create_node (0, arccos, lf, nullptr)
+
+#define ARCTG(lf)\
+create_node (0, arctg, lf, nullptr)
+
+#define SQRT(lf)\
+create_node (0, sqroot, lf, nullptr)

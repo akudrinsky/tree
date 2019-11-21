@@ -1,10 +1,15 @@
-\documentclass[12pt,a4paper]{scrartcl}
-\usepackage[utf8]{inputenc}
-\usepackage[english,russian]{babel}
-\usepackage{indentfirst}
-\usepackage{misccorr}
-\usepackage{graphicx}
-\usepackage{amsmath}
+\documentclass[a4paper,12pt]{article}
+
 \begin{document}
-Здравствуй, Мир!!!
-\end{document}
+
+\title{New approaches to derivative analysis}
+\author{Alexey Kudrinsky}
+\date{\today}
+\maketitle
+
+\section{Introduction}
+In this work we discuss several new approaches to finding function derivatives. Many people, and even mathematicians, would say that is a trick, because it gives you a huge boost in productivity.
+Honor programming!
+\section{Example}
+\par Let's consider an example of finding a derivative in an expression that normal universities would call brutal \begin{math}((\frac{\sin{x}}{x}*\ln{x}+x*\tan{x*\ln{x}}))'\end{math}\par Make that equation great again! \begin{math}(x)' \to 1.00\end{math}\par Hence,  \begin{math}(\sin{x})' \to \cos{x}*1.00\end{math}\par Consequently,  \begin{math}(x)' \to 1.00\end{math}\par It's time to simplify previous equation:  \begin{math}(\frac{\sin{x}}{x})' \to \frac{(\cos{x}*1.00*x-1.00*\sin{x})}{x*x}\end{math}\par We suggest to hope that with the help of god it will later be slashed out \begin{math}(x)' \to 1.00\end{math}\par If all else fails, read the well-known book K and R:  \begin{math}(\ln{x})' \to \frac{1.00}{x}\end{math}\par It's time to simplify previous equation:  \begin{math}(\frac{\sin{x}}{x}*\ln{x})' \to (\frac{(\cos{x}*1.00*x-1.00*\sin{x})}{x*x}*\ln{x}+\frac{\sin{x}}{x}*\frac{1.00}{x})\end{math}\par It's time to simplify previous equation:  \begin{math}(x)' \to 1.00\end{math}\par Later, due to,  \begin{math}(x)' \to 1.00\end{math}\par Consequently,  \begin{math}(x)' \to 1.00\end{math}\par And so, roughly speaking \begin{math}(\ln{x})' \to \frac{1.00}{x}\end{math}\par Our next step is quite obvious \begin{math}(x*\ln{x})' \to (1.00*\ln{x}+x*\frac{1.00}{x})\end{math}\par You should better give it to MIPT student, he would do that much faster \begin{math}(\tan{x*\ln{x}})' \to \frac{1.00}{{(\cos{x*\ln{x}})}^{2.00}}*(1.00*\ln{x}+x*\frac{1.00}{x})\end{math}\par What shall we do with this?? \begin{math}(x*\tan{x*\ln{x}})' \to (1.00*\tan{x*\ln{x}}+x*\frac{1.00}{{(\cos{x*\ln{x}})}^{2.00}}*(1.00*\ln{x}+x*\frac{1.00}{x}))\end{math}\par Our next step is quite obvious \begin{math}((\frac{\sin{x}}{x}*\ln{x}+x*\tan{x*\ln{x}}))' \to ((\frac{(\cos{x}*1.00*x-1.00*\sin{x})}{x*x}*\ln{x}+\frac{\sin{x}}{x}*\frac{1.00}{x})+(1.00*\tan{x*\ln{x}}+x*\frac{1.00}{{(\cos{x*\ln{x}})}^{2.00}}*(1.00*\ln{x}+x*\frac{1.00}{x})))\end{math}\par You should better give it to MIPT student, he would do that much faster \begin{math} \to ((\frac{(\cos{x}*x-\sin{x})}{x*x}*\ln{x}+\frac{\sin{x}}{x}*\frac{1.00}{x})+(\tan{x*\ln{x}}+x*\frac{1.00}{{(\cos{x*\ln{x}})}^{2.00}}*(\ln{x}+x*\frac{1.00}{x})))\end{math}\par \par All in all, the derivative of this crocodile:  \begin{math}((\frac{\sin{x}}{x}*\ln{x}+x*\tan{x*\ln{x}}))'\end{math}\par  \begin{math} \to ((\frac{(\cos{x}*x-\sin{x})}{x*x}*\ln{x}+\frac{\sin{x}}{x}*\frac{1.00}{x})+(\tan{x*\ln{x}}+x*\frac{1.00}{{(\cos{x*\ln{x}})}^{2.00}}*(\ln{x}+x*\frac{1.00}{x})))\end{math}\section{Ending words}
+In previous sections we modestly discussed different techniques, which make differentiation quite easy and even intuitively understandable. Of course, this brief leaflet should be considered only as an introduction to new methods of derivative analysis.\end{document}
